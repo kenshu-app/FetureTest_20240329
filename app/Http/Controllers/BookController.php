@@ -12,7 +12,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        return view('index', ['books' => Book::all()]);
+        $books = Book::orderBy('created_at', 'desc')->get();
+        return view('books.index', ['books' => $books]);
     }
 
     /**
@@ -20,7 +21,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        return view('create');
+        return view('books.create', ['book' => new Book]);
     }
 
     /**
@@ -28,49 +29,41 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = new Book;
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->published_on = $request->published_on;
-        $book->save();
-        return redirect(route('books.index'));
+        $book = $request->user()->books()->create($request->all());
+        return redirect(route('home'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Book $book)
     {
-        return view('show', ['book' => Book::find($id)]);
+        return view('books.show', ['book' => $book]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Book $book)
     {
-        return view('edit', ['book' => Book::find($id)]);
+        return view('books.edit', ['book' => $book]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Book $book)
     {
-        $book = Book::find($id);
-        $book->title = $request->title;
-        $book->author = $request->author;
-        $book->published_on = $request->published_on;
-        $book->save();
-        return redirect(route('books.show', $book->id));
+        $book->updte($request->all());
+        return redirect(route('books.show', $book));
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Book $book)
     {
-        Book::find($id)->delete();
-        return redirect(route('books.index'));
+        $book->delete();
+        return redirect(route('home'));
     }
 }
