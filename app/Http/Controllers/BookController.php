@@ -12,7 +12,7 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::orderBy('created_at', 'desc')->get();
+        $books = Book::where('user_id', '<>', \Auth::id())->orderBy('created_at', 'desc')->paginate(20);
         return view('books.index', ['books' => $books]);
     }
 

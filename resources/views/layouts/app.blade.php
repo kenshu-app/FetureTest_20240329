@@ -10,7 +10,10 @@
 
 <body>
     <header>
-        <div class="container"><a href="/" class="brand">{{ config('app.name') }}</a></div>
+        <div class="container">
+            <a href="/" class="brand">{{ config('app.name') }}</a>
+            @include('commons.nav')
+        </div>
     </header>
     <main>
         <div class="container">
