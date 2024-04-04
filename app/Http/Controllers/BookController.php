@@ -29,7 +29,7 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
-        $book = $request->user()->books()->create($request->all());
+        $request->user()->books()->create($request->all());
         return redirect(route('home'));
     }
 
