@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
-
 class BookController extends Controller
 {
     /**
@@ -29,6 +28,11 @@ class BookController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'title' => 'required|max:100',
+            'author' => 'max:100',
+            'publisher' => 'max:100',
+        ]);
         $request->user()->books()->create($request->all());
         return redirect(route('home'));
     }
@@ -56,6 +60,11 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $this->authorize($book);
+        $this->validate($request, [
+            'title' => 'required|max:100',
+            'author' => 'max:100',
+            'publisher' => 'max:100',
+        ]);
         $book->update($request->all());
         return redirect(route('books.show', $book));
     }

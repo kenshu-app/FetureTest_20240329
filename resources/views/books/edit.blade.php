@@ -2,6 +2,7 @@
 
 @section('content')
     <h1>書籍情報編集</h1>
+    @include('commons.flash')
     <form action="{{ route('books.update', $book->id) }}" method="post" novalidate>
         @method('patch')
         @include('books.form')

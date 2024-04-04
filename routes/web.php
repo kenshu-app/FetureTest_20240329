@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 
 
 Route::get('/', function() {
-    return view('welecome');
+    return view('welcome');
 });
 
 Route::group(['middleware' => ['auth']], function () {
