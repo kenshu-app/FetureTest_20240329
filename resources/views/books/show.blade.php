@@ -1,26 +1,35 @@
-<!DOCTYPE html>
-<html lang="ja">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>蔵書アプリ</title>
-</head>
-
-<body>
-    <h1>書籍詳細</h1>
+@section('content')
+    <h1>書籍情報</h1>
     <h2>{{ $book->title }}</h2>
-    <p>著者：{{ $book->author }}</p>
-    <p>出版日：{{ $book->published_on }}</p>
-    <p><a href="{{ route('books.edit', $book->id) }}">編集する</a></p>
     <p>
-      <form action="{{ route('books.destroy', $book->id) }}" method="post">
+        <a href="{{ route('books.edit', $book->id) }}">編集する</a>
+        |
+        <a href="#" onclick="deleteBook()">削除する</a>
+    <form action="{{ route('books.destroy', $book) }}" method="post" id="delete-form">
         @csrf
         @method('delete')
-        <button type="submit">削除する</button>
-      </form>
+    </form>
+    <script>
+        function deleteBook() {
+            event.preventDefault()
+            if (confirm('本当に確認しますか?')) {
+                document.getElementById('delete-form').submit()
+            }
+        }
+    </script>
     </p>
-    <p><a href="/">戻る</a></p>
-</body>
-
-</html>
+    <dl>
+        <dt>タイトル</dt>
+        <dd>{{ $book->title }}</dd>
+        <dt>著者</dt>
+        <dd>{{ $book->author }}</dd>
+        <dt>出版社</dt>
+        <dd>{{ $book->publisher }}</dd>
+        <dt>投稿者</dt>
+        <dd>{{ $book->user->name }}</dd>
+        <dt>感想文</dt>
+        <dd>{!! nl2br(e($book->review)) !!}</dd>
+    </dl>
+@endsection

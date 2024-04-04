@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<h1>書籍登録</h1>
-<form action="{{ route('books.store') }}" method="post" novalidate>
-  @include('books.form')
-  <button type="submit">登録</button>
+    <h1>書籍登録</h1>
+    <form action="{{ route('books.store') }}" method="post" novalidate>
+        @include('books.form')
+        <button type="submit">登録</button>
+    </form>
 @endsection
