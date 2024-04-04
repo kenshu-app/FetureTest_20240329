@@ -11,7 +11,7 @@
 <body>
     <header>
         <div class="container">
-            <a href="/" class="brand">{{ config('app.name') }}</a>
+            <a href="{{ route('')}}" class="brand">{{ config('app.name') }}</a>
             @include('commons.nav')
         </div>
     </header>

@@ -46,6 +46,7 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
+        $this->authorize($book);
         return view('books.edit', ['book' => $book]);
     }
 
@@ -54,6 +55,7 @@ class BookController extends Controller
      */
     public function update(Request $request, Book $book)
     {
+        $this->authorize($book);
         $book->update($request->all());
         return redirect(route('books.show', $book));
     }
@@ -63,6 +65,7 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
+        $this->authorize($book);
         $book->delete();
         return redirect(route('home'));
     }
